@@ -123,7 +123,7 @@
 * File: $MYDIR/importToken_$CMK_ID1_$TIMESTAMP
 * File: $MYDIR/README_$CMK_ID1_$TIMESTAMP.txt
 
-# Generate and Encrypt Key Material
+# Task 3: Generate and Encrypt Key Material
 
 ## Steps
 * Open Linux/Windows command line
@@ -143,7 +143,7 @@ openssl rsautl -pubin -encrypt -oaep -keyform DER \
  -out EncryptedKeyMaterial1.bin
 ```
 
-# Task 3: Import Encrypted Key Material into CMK
+# Task 4: Import Encrypted Key Material into CMK
 
 ## Steps
 * Service -> KMS -> Customer managed keys
@@ -157,7 +157,7 @@ openssl rsautl -pubin -encrypt -oaep -keyform DER \
 * Check that status of `$CMK_ALIAS` has changed from Pending to Enabled
 
 
-# Task 4: Use CMK to Encrypt S3 objects in an Application Account
+# Task 5: Use CMK to Encrypt S3 objects in an Application Account
 
 ## Inputs
 * `$MY_ENCRYPTED_BUCKET`: A sandbox bucket for testing key rotation
@@ -176,7 +176,7 @@ openssl rsautl -pubin -encrypt -oaep -keyform DER \
 * Upload `$MY_SAMPLE_OBJECT1` into `$MY_ENCRYPTED_BUCKET`, accepting the default encryption option (labelled None) - which is AWS-KMS with `$CMK_ALIAS_ARN`.
 
 
-# Task 5: Rotate CMK
+# Task 6: Rotate CMK
 
 * Open Linux/Windows command line
 * cd $MYDIR
@@ -230,7 +230,7 @@ aws kms put-key-policy --key-id $CMK_ID2 --policy-name default --policy file://P
 aws kms update-alias --alias-name alias/$CMK_ALIAS --target-key-id $CMK_ID2
 ```
 
-# Task 6: Use the rotated CMK to Encrypt S3 objects in an Application Account
+# Task 7: Use the rotated CMK to Encrypt S3 objects in an Application Account
 
 ## Inputs
 * `$MY_SAMPLE_OBJECT2`: A sample object for testing key rotation
@@ -242,7 +242,7 @@ aws kms update-alias --alias-name alias/$CMK_ALIAS --target-key-id $CMK_ID2
 * Upload `$MY_SAMPLE_OBJECT2` into `$MY_ENCRYPTED_BUCKET`, accepting the default encryption option (labelled None) - which is AWS-KMS with `$CMK_ALIAS_ARN`.
 * Confirm that upload is successful
 
-# Confirm that objects encrypted prior to CMK rotation remain accessible
+# Task 8: Confirm that objects encrypted prior to CMK rotation remain accessible
 
 ## Steps
 * Login to Application Account `$CMK_USER_ACCOUNT1` as `$CMK_USER_ROLE1`
