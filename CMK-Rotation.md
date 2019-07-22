@@ -2,7 +2,7 @@
 # Manual CMK Rotation Demo
 ****
 
-# Create CMK with No Key Material
+# Task 1: Create CMK with No Key Material
 ## Inputs
 * `$CMK_ALIAS`: Friendly name for Customer Master Key (CMK)
 * `$CMK_REGION`: CMK-Owning Region 
@@ -104,7 +104,7 @@
 }
 ```
 
-# Download Public Key and Token for Importing Key Material
+# Task 2: Download RSA Public Key and Token for Importing Key Material
 
 ## Inputs
 * `$MYDIR`: Local working directory for generating key material
@@ -143,7 +143,7 @@ openssl rsautl -pubin -encrypt -oaep -keyform DER \
  -out EncryptedKeyMaterial1.bin
 ```
 
-# Import Encrypted Key Material into CMK
+# Task 3: Import Encrypted Key Material into CMK
 
 ## Steps
 * Service -> KMS -> Customer managed keys
@@ -157,7 +157,7 @@ openssl rsautl -pubin -encrypt -oaep -keyform DER \
 * Check that status of `$CMK_ALIAS` has changed from Pending to Enabled
 
 
-# Use CMK to Encrypt S3 objects in an Application Account
+# Task 4: Use CMK to Encrypt S3 objects in an Application Account
 
 ## Inputs
 * `$MY_ENCRYPTED_BUCKET`: A sandbox bucket for testing key rotation
@@ -176,7 +176,7 @@ openssl rsautl -pubin -encrypt -oaep -keyform DER \
 * Upload `$MY_SAMPLE_OBJECT1` into `$MY_ENCRYPTED_BUCKET`, accepting the default encryption option (labelled None) - which is AWS-KMS with `$CMK_ALIAS_ARN`.
 
 
-# Rotate CMK
+# Task 5: Rotate CMK
 
 * Open Linux/Windows command line
 * cd $MYDIR
@@ -230,7 +230,7 @@ aws kms put-key-policy --key-id $CMK_ID2 --policy-name default --policy file://P
 aws kms update-alias --alias-name alias/$CMK_ALIAS --target-key-id $CMK_ID2
 ```
 
-# Use the rotated CMK to Encrypt S3 objects in an Application Account
+# Task 6: Use the rotated CMK to Encrypt S3 objects in an Application Account
 
 ## Inputs
 * `$MY_SAMPLE_OBJECT2`: A sample object for testing key rotation
